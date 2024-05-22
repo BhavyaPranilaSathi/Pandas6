@@ -1,0 +1,50 @@
+Pandas6
+1 Problem 1 : Delete Duplicate Emails 
+
+
+sol 1:
+
+import pandas as pd
+
+def delete_duplicate_emails(person: pd.DataFrame) -> None:
+    person.sort_values(by='id',ascending=True,inplace=True)
+    person.drop_duplicates(['email'], inplace=True)
+
+
+
+sol 2:
+
+import pandas as pd
+
+def delete_duplicate_emails(person: pd.DataFrame) -> None:
+    min_id= person.groupby('email')['id'].transform('min')
+    idtoberemoved = person[person['id'] != min_id]
+    person.drop(idtoberemoved.index ,inplace=True)
+
+
+
+
+
+
+2 Problem 2 : The Number of Rich Customers 
+
+
+sol 1:
+
+import pandas as pd
+
+def count_rich_customers(store: pd.DataFrame) -> pd.DataFrame:
+    #rich_customers = store[store['amount'] > 500]
+    #rich_customers_unique = rich_customers.drop_duplicates('customer_id')
+    #rich_count = len(rich_customers_unique)
+    #return pd.DataFrame([rich_count], columns ={rich_count})
+
+
+sol 1:
+
+import pandas as pd
+
+def count_rich_customers(store: pd.DataFrame) -> pd.DataFrame:
+    df = store[store['amount'] > 500]
+    richcount =len(set(df['customer_id']))
+    return pd.DataFrame([richcount],columns=['rich_count'])
